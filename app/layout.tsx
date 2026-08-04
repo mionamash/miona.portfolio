@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { contactInfo } from "@/data/contact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,14 +13,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://naomimacharia.dev";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://naomimacharia.dev"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Naomi Macharia | Junior Software Engineer",
     template: "%s | Naomi Macharia",
   },
   description:
     "Portfolio of Naomi Macharia — Junior Software Engineer specializing in full-stack and mobile development. Building scalable web and mobile applications that solve real-world problems.",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Naomi Macharia",
     "Software Engineer",
@@ -35,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://naomimacharia.dev",
+    url: siteUrl,
     siteName: "Naomi Macharia Portfolio",
     title: "Naomi Macharia | Junior Software Engineer",
     description:
@@ -89,6 +95,42 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Naomi Macharia",
+              url: siteUrl,
+              jobTitle: "Junior Software Engineer",
+              description:
+                "Full-stack and mobile developer building scalable web and mobile applications.",
+              email: `mailto:${contactInfo.email}`,
+              image: `${siteUrl}/og-image.png`,
+              sameAs: [contactInfo.github, contactInfo.linkedin],
+              alumniOf: [
+                { "@type": "CollegeOrUniversity", name: "Maseno University" },
+                {
+                  "@type": "CollegeOrUniversity",
+                  name: "eMobilis Technology Training Institute",
+                },
+              ],
+              knowsAbout: [
+                "React",
+                "Next.js",
+                "TypeScript",
+                "Flutter",
+                "Firebase",
+                "PostgreSQL",
+                "HTML",
+                "CSS",
+                "JavaScript",
+                "Python",
+              ],
+            }),
+          }}
+        />
         {children}
       </body>
     </html>
