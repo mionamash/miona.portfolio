@@ -86,7 +86,8 @@ function ExperienceCard({ experience }: { experience: typeof experiences[0] }) {
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex w-full items-center justify-between rounded-lg border border-border bg-muted/30 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/50"
+          aria-expanded={isExpanded}
+          className="flex w-full items-center justify-between rounded-lg border border-border bg-muted/30 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <span>Contributions</span>
           <motion.span

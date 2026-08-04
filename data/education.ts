@@ -4,9 +4,19 @@ export interface Education {
   degree: string;
   field: string;
   period: string;
+  status: "ongoing" | "completed";
   description: string;
   coursework: string[];
   achievements: string[];
+}
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  year: string;
+  skills: string[];
+  certificateUrl?: string;
 }
 
 export const education: Education[] = [
@@ -16,6 +26,7 @@ export const education: Education[] = [
     degree: "Bachelor of Science",
     field: "Information Technology",
     period: "2022 - 2026",
+    status: "ongoing",
     description:
       "Pursuing a comprehensive education in information technology with focus on software development, database management, and systems design.",
     coursework: [
@@ -33,5 +44,24 @@ export const education: Education[] = [
       "Participated in university hackathons",
       "Maintained consistent academic performance",
     ],
+  },
+];
+
+export const certifications: Certification[] = [
+  {
+    id: "emobilis",
+    title: "Certificate in Software Development",
+    issuer: "eMobilis Technology Training Institute",
+    year: "2024",
+    skills: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Python",
+      "Android Development",
+      "Web Development Fundamentals",
+      "Git & Version Control",
+    ],
+    certificateUrl: "/certificates/emobilis-software-development.pdf",
   },
 ];

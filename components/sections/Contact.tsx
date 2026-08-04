@@ -132,8 +132,18 @@ export function Contact() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
+            <motion.form
+              onSubmit={handleSubmit}
+              initial="hidden"
+              animate="visible"
+              className="space-y-4"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+              >
                 <label
                   htmlFor="name"
                   className="mb-2 block text-sm font-medium text-foreground"
@@ -145,12 +155,17 @@ export function Contact() {
                   id="name"
                   name="name"
                   required
-                  className="w-full rounded-lg border border-border bg-muted/50 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full rounded-lg border border-border bg-muted/50 px-4 py-3 text-foreground placeholder:text-muted-foreground transition-all duration-300 focus:border-primary focus:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="Your name"
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: 0.25 }}
+              >
                 <label
                   htmlFor="email"
                   className="mb-2 block text-sm font-medium text-foreground"
@@ -165,9 +180,14 @@ export function Contact() {
                   className="w-full rounded-lg border border-border bg-muted/50 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="your@email.com"
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: 0.35 }}
+              >
                 <label
                   htmlFor="message"
                   className="mb-2 block text-sm font-medium text-foreground"
@@ -179,45 +199,52 @@ export function Contact() {
                   name="message"
                   required
                   rows={5}
-                  className="w-full resize-none rounded-lg border border-border bg-muted/50 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full resize-none rounded-lg border border-border bg-muted/50 px-4 py-3 text-foreground placeholder:text-muted-foreground transition-all duration-300 focus:border-primary focus:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/20"
                   placeholder="Your message..."
                 />
-              </div>
+              </motion.div>
 
-              <AnimatePresence mode="wait">
-                {isSubmitted ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-success/10 px-6 py-3 text-success"
-                  >
-                    <CheckCircle className="size-5" />
-                    Message sent successfully!
-                  </motion.div>
-                ) : (
-                  <motion.button
-                    type="submit"
-                    disabled={isSubmitting}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="size-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="size-4" />
-                        Send Message
-                      </>
-                    )}
-                  </motion.button>
-                )}
-              </AnimatePresence>
-            </form>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.4, delay: 0.45 }}
+              >
+                <AnimatePresence mode="wait">
+                  {isSubmitted ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="flex items-center justify-center gap-2 rounded-lg bg-success/10 px-6 py-3 text-success"
+                    >
+                      <CheckCircle className="size-5" />
+                      Message sent successfully!
+                    </motion.div>
+                  ) : (
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="size-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="size-4" />
+                          Send Message
+                        </>
+                      )}
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </motion.form>
           </motion.div>
         </div>
       </div>

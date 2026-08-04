@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { FloatingOrb } from "@/components/animations/FloatingOrb";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -48,6 +50,7 @@ const letterVariants = {
 
 export function Hero() {
   const name = "Naomi Macharia";
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <section
@@ -55,8 +58,12 @@ export function Hero() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-6"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-      <div className="absolute top-1/4 left-1/4 size-96 rounded-full bg-primary/10 blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 size-96 rounded-full bg-accent/10 blur-3xl" />
+      <FloatingOrb className="absolute top-1/4 left-1/4 size-96 rounded-full bg-primary/10 blur-3xl" />
+      <FloatingOrb
+        className="absolute bottom-1/4 right-1/4 size-96 rounded-full bg-accent/10 blur-3xl"
+        duration={7}
+        delay={1}
+      />
 
       <motion.div
         variants={containerVariants}
@@ -132,20 +139,20 @@ export function Hero() {
 
         <motion.div
           variants={itemVariants}
-          className="mt-20 flex items-center justify-center gap-8 text-sm text-muted-foreground"
+          className="mt-20 flex items-center justify-center gap-4 text-xs text-muted-foreground sm:gap-8 sm:text-sm"
         >
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-foreground">4+</span>
+            <span className="text-xl font-bold text-foreground sm:text-2xl">4+</span>
             <span>Projects</span>
           </div>
           <div className="h-8 w-px bg-border" />
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-foreground">6+</span>
+            <span className="text-xl font-bold text-foreground sm:text-2xl">6+</span>
             <span>Technologies</span>
           </div>
           <div className="h-8 w-px bg-border" />
           <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-foreground">2+</span>
+            <span className="text-xl font-bold text-foreground sm:text-2xl">2+</span>
             <span>Company Projects</span>
           </div>
         </motion.div>
@@ -158,7 +165,11 @@ export function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
-          animate={{ y: [0, 10, 0] }}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { y: [0, 10, 0] }
+          }
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2 text-sm text-muted-foreground"
         >

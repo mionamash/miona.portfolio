@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Reveal } from "@/components/animations/Reveal";
 import { highlights, technologies, aboutContent } from "@/data/about";
 
 const containerVariants = {
@@ -42,13 +43,7 @@ export function About() {
         />
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
+          <Reveal direction="right" duration={0.6} className="space-y-6">
             {aboutContent.paragraphs.map((paragraph, index) => (
               <p key={index} className="text-lg text-muted-foreground leading-relaxed">
                 {paragraph}
@@ -57,7 +52,7 @@ export function About() {
             <p className="text-lg text-primary font-medium">
               {aboutContent.currentFocus}
             </p>
-          </motion.div>
+          </Reveal>
 
           <motion.div
             variants={containerVariants}
@@ -70,7 +65,8 @@ export function About() {
               <motion.div
                 key={highlight.title}
                 variants={itemVariants}
-                className="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/50 hover:bg-muted/50"
+                whileHover={{ y: -4 }}
+                className="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/50 hover:bg-muted/50 hover:shadow-lg hover:shadow-primary/5"
               >
                 <highlight.icon className="mb-3 size-8 text-primary transition-colors group-hover:text-accent" />
                 <h3 className="mb-1 font-semibold text-foreground">

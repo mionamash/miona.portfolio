@@ -10,7 +10,7 @@ const socialLinks = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/naomimacharia",
+    href: "https://www.linkedin.com/in/naomi-macharia-b25899388/",
     icon: "linkedin" as const,
   },
   {
@@ -100,7 +100,7 @@ export function Footer() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex size-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="flex size-11 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label={link.label}
             >
               <FooterIcon icon={link.icon} className="size-5" />

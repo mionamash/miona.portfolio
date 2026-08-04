@@ -45,10 +45,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5"
+      whileHover={{ y: -4 }}
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5"
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
       <div className="mb-4 flex items-start justify-between">
-        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
           {project.title}
         </h3>
         <span

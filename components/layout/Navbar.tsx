@@ -39,6 +39,17 @@ export function Navbar() {
     };
   }, [isMobileOpen]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isMobileOpen) {
+        setIsMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileOpen]);
+
   return (
     <>
       <motion.header
@@ -51,7 +62,10 @@ export function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+        <nav
+          className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
+          aria-label="Main navigation"
+        >
           <a href="#" className="text-lg font-bold text-foreground">
             NM<span className="text-primary">.</span>
           </a>
@@ -61,7 +75,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
               >
                 {link.label}
               </a>
@@ -89,6 +103,8 @@ export function Navbar() {
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="flex size-10 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted md:hidden"
             aria-label={isMobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -98,13 +114,14 @@ export function Navbar() {
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-16 z-40 border-b border-border bg-background/95 backdrop-blur-lg md:hidden"
+            className="fixed inset-0 top-16 z-40 overflow-y-auto border-b border-border bg-background/95 backdrop-blur-lg md:hidden"
           >
-            <nav className="flex flex-col gap-2 p-6">
+            <nav className="flex flex-col gap-2 p-6" aria-label="Mobile navigation">
               {navLinks.map((link, index) => (
                 <motion.a
                   key={link.href}
@@ -113,7 +130,7 @@ export function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
                   onClick={() => setIsMobileOpen(false)}
-                  className="rounded-lg px-4 py-3 text-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="rounded-lg px-4 py-3 text-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 >
                   {link.label}
                 </motion.a>

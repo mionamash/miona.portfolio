@@ -119,6 +119,9 @@
   html {
     @apply font-sans scroll-smooth;
   }
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary/60 ring-offset-2 ring-offset-background;
+  }
 }
 
 @layer utilities {

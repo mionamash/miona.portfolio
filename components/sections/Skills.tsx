@@ -55,6 +55,7 @@ export function Skills() {
             <motion.div
               key={category.id}
               variants={categoryVariants}
+              whileHover={{ y: -4 }}
               className="group rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
             >
               <h3 className="mb-2 text-lg font-semibold text-foreground">
