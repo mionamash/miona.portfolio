@@ -1,11 +1,11 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Mail, MessageCircle } from "lucide-react";
 
 const socialLinks = [
   {
     label: "GitHub",
-    href: "https://github.com/naomimacharia",
+    href: "https://github.com/mionamash",
     icon: "github" as const,
   },
   {
@@ -15,12 +15,26 @@ const socialLinks = [
   },
   {
     label: "Email",
-    href: "mailto:naomi@example.com",
+    href: "mailto:waithiramacharia500@gmail.com",
     icon: "mail" as const,
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/254115997875",
+    icon: "whatsapp" as const,
   },
 ];
 
 const technologies = ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "shadcn/ui"];
+
+const navLinks = [
+  { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Education", href: "#education" },
+  { label: "Contact", href: "#contact" },
+];
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -56,6 +70,8 @@ function FooterIcon({ icon, className }: { icon: string; className?: string }) {
       return <LinkedinIcon className={className} />;
     case "mail":
       return <Mail className={className} />;
+    case "whatsapp":
+      return <MessageCircle className={className} />;
     default:
       return null;
   }
@@ -65,6 +81,18 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-background py-8">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6">
+        <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
         <div className="flex items-center gap-4">
           {socialLinks.map((link) => (
             <a

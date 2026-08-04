@@ -117,7 +117,7 @@ export function Hero() {
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </a>
           <a
-            href="https://github.com/naomimacharia"
+            href="https://github.com/mionamash"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
