@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface ContactFormData {
   name: string;
   email: string;
@@ -46,6 +44,15 @@ export async function POST(request: Request) {
       );
     }
 
+    const resendApiKey = process.env.RESEND_API_KEY;
+
+    if (!resendApiKey) {
+      return NextResponse.json(
+        { error: "Server configuration error." },
+        { status: 500 }
+      );
+    }
+
     const recipientEmail = process.env.CONTACT_EMAIL;
 
     if (!recipientEmail) {
@@ -55,7 +62,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { error } = await resend.emails.send({
+    const { error } = await new Resend(resendApiKey).emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to: recipientEmail,
       replyTo: email,
