@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/animations/Reveal";
+import { Marquee } from "@/components/animations/Marquee";
 import { highlights, technologies, aboutContent } from "@/data/about";
 
 const containerVariants = {
@@ -24,14 +25,8 @@ const itemVariants = {
   },
 };
 
-const techVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.3, ease: "easeOut" as const },
-  },
-};
+const row1 = technologies.slice(0, 4);
+const row2 = technologies.slice(4);
 
 export function About() {
   return (
@@ -85,29 +80,31 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-16"
+          className="mt-16 space-y-3"
         >
           <h3 className="mb-6 text-center text-lg font-semibold text-foreground">
             Technologies I Work With
           </h3>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {technologies.map((tech) => (
-              <motion.div
+          <Marquee direction="left" duration={25}>
+            {row1.map((tech) => (
+              <div
                 key={tech.name}
-                variants={techVariants}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className="rounded-full border border-border bg-muted/50 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
+                className="shrink-0 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
               >
                 {tech.name}
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </Marquee>
+          <Marquee direction="right" duration={30}>
+            {row2.map((tech) => (
+              <div
+                key={tech.name}
+                className="shrink-0 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
+              >
+                {tech.name}
+              </div>
+            ))}
+          </Marquee>
         </motion.div>
       </div>
     </section>

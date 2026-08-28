@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, CheckCircle, Mail, Download, MessageCircle } from "lucide-react";
+import { Send, CheckCircle, AlertCircle, Mail, Download, MessageCircle } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { contactInfo } from "@/data/contact";
 
@@ -23,20 +23,43 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 export function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
 
-    setTimeout(() => setIsSubmitted(false), 3000);
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Something went wrong. Please try again.");
+        return;
+      }
+
+      formRef.current?.reset();
+      setIsSubmitted(true);
+      setTimeout(() => setIsSubmitted(false), 4000);
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -133,6 +156,7 @@ export function Contact() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <motion.form
+              ref={formRef}
               onSubmit={handleSubmit}
               initial="hidden"
               animate="visible"
@@ -213,6 +237,7 @@ export function Contact() {
                 <AnimatePresence mode="wait">
                   {isSubmitted ? (
                     <motion.div
+                      key="success"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
@@ -223,6 +248,7 @@ export function Contact() {
                     </motion.div>
                   ) : (
                     <motion.button
+                      key="submit"
                       type="submit"
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02 }}
@@ -241,6 +267,20 @@ export function Contact() {
                         </>
                       )}
                     </motion.button>
+                  )}
+                </AnimatePresence>
+
+                <AnimatePresence>
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-3 flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                    >
+                      <AlertCircle className="size-4 shrink-0" />
+                      {error}
+                    </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
